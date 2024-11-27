@@ -1,0 +1,1 @@
+export type Vector2ToString = `${number},${number}`;
