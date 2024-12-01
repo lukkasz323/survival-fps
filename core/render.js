@@ -6,8 +6,9 @@ export function renderGame(scene, canvas) {
 }
 function renderDebug(ctx, scene) {
     ctx.fillStyle = "black";
-    ctx.fillText(scene.player.entity.velocity.x.toString(), 32, 32);
-    ctx.fillText(scene.player.entity.velocity.y.toString(), 32, 64);
+    const v = scene.player.entity.velocity;
+    ctx.fillText(Math.abs(v.x) > 0.01 ? v.x.toString() : "0~", 32, 32);
+    ctx.fillText(Math.abs(v.y) > 0.01 ? v.y.toString() : "0~", 32, 64);
 }
 function renderBackground(ctx, canvas) {
     ctx.fillStyle = "white";

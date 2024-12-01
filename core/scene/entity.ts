@@ -1,6 +1,4 @@
-import { Vector2, sumVector2 } from "../../utils/vector2.js";
-import { Direction } from "./direction.js";
-import { offsetByDirection } from "./offsetByDirection.js";
+import { Vector2} from "../../utils/vector2.js";
 
 export class Entity {
     velocity: Vector2 = {x: 0, y: 0};

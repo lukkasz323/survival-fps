@@ -1,5 +1,4 @@
 import { FPSCounter } from "../../utils/fpsCounter.js";
-import { Direction } from "./direction.js";
 import { Entity } from "./entity.js";
 import { Item } from "./item.js";
 import { Player } from "./player.js";
