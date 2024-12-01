@@ -1,23 +1,31 @@
-import { Direction } from "./scene/direction.js";
-import { Item } from "./scene/item.js";
+import { Scene } from "./scene/scene.js";
 export function updateGame(scene, input, deltaTime) {
     if (input.showFPS) {
         scene.fpsCounter.update(deltaTime);
         console.log(scene.fpsCounter.calculateAverage());
     }
-    scene.items.push(Item.Generate());
     // Keyboard
-    if (scene.ticks % 2 == 0) {
-        if (input.keyW || input.keyS || input.keyA || input.keyD) {
-            if (input.keyW && !input.keyS)
-                scene.player.entity.tryDirection(Direction.North);
-            else if (input.keyS && !input.keyW)
-                scene.player.entity.tryDirection(Direction.South);
-            else if (input.keyA && !input.keyD)
-                scene.player.entity.tryDirection(Direction.West);
-            else if (input.keyD && !input.keyA)
-                scene.player.entity.tryDirection(Direction.East);
-        }
-    }
+    const v = scene.player.entity.velocity;
+    // Deceleration
+    v.x = v.x / 1.2;
+    v.y = v.y / 1.2;
+    // Acceleration
+    const keyCount = Number(input.keyW) + Number(input.keyS) + Number(input.keyA) + Number(input.keyD);
+    let acceleration = 0;
+    if (keyCount == 1)
+        acceleration = scene.player.entity.speed;
+    if (keyCount == 2)
+        acceleration = scene.player.entity.speed * Scene.DIAGONAL;
+    if (input.keyW)
+        v.y -= acceleration;
+    if (input.keyS)
+        v.y += acceleration;
+    if (input.keyA)
+        v.x -= acceleration;
+    if (input.keyD)
+        v.x += acceleration;
+    // Player movement
+    scene.player.entity.origin.x += v.x;
+    scene.player.entity.origin.y += v.y;
     scene.ticks++;
 }

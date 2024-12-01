@@ -9,6 +9,7 @@ export class Input {
     showFPS = false;
     constructor(canvas) {
         this.canvas = canvas;
+        console.log(this);
     }
     addEventListeners() {
         this.canvas.addEventListener("mousemove", (event) => this.#onMouseMove(event));

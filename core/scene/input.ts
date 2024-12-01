@@ -12,6 +12,7 @@ export class Input {
     showFPS: boolean = false;
     
     constructor(public canvas: HTMLCanvasElement) {
+        console.log(this);
     }
 
     addEventListeners() {

@@ -5,36 +5,44 @@ export function renderGame(scene: Scene, canvas: HTMLCanvasElement) {
 
     renderBackground(ctx, canvas);
     renderEntities(ctx, scene);
-    renderGrid(ctx, scene, canvas);
-    //renderItemDescription(ctx, scene);
-    //renderItems(ctx, scene);
-    //renderItemCountByRarity(ctx, scene);
+    renderDebug(ctx, scene);
+}
+
+function renderDebug(ctx: CanvasRenderingContext2D, scene: Scene) {
+    ctx.fillStyle = "black";
+    ctx.fillText(scene.player.entity.velocity.x.toString(), 32, 32);
+    ctx.fillText(scene.player.entity.velocity.y.toString(), 32, 64);
 }
 
 function renderBackground(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
-    ctx.fillStyle = "#AAA";
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function renderGrid(ctx: CanvasRenderingContext2D, scene: Scene, canvas: HTMLCanvasElement) {
-    ctx.fillStyle = "black";
-    ctx.lineWidth = 2;
-    for (let y = 0; y < canvas.height / scene.gridSize; y++) {
-        for (let x = 0; x < canvas.width / scene.gridSize; x++) {
-            ctx.strokeRect(x * scene.gridSize, y * scene.gridSize, scene.gridSize, scene.gridSize)
-        }
-    }
-}
+// function renderGrid(ctx: CanvasRenderingContext2D, scene: Scene, canvas: HTMLCanvasElement) {
+//     ctx.strokeStyle = "black";
+//     ctx.lineWidth = 2;
+//     for (let y = 0; y < canvas.height / scene.gridSize; y++) {
+//         for (let x = 0; x < canvas.width / scene.gridSize; x++) {
+//             ctx.strokeRect(x * scene.gridSize, y * scene.gridSize, scene.gridSize, scene.gridSize)
+//         }
+//     }
+// }
 
 function renderEntities(ctx: CanvasRenderingContext2D, scene: Scene) {
     // Player
-    ctx.fillStyle = "blue";
-    ctx.fillRect(scene.player.entity.origin.x * scene.gridSize, scene.player.entity.origin.y * scene.gridSize, scene.gridSize, scene.gridSize);
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(scene.player.entity.origin.x, scene.player.entity.origin.y, scene.player.entity.radius, 0, 2 * Math.PI)
+    ctx.stroke();
 
     // Enemies
-    ctx.fillStyle = "red";
+    ctx.strokeStyle = "red";
     for (const e of scene.enemies) {
-        ctx.fillRect(e.origin.x * scene.gridSize, e.origin.y * scene.gridSize, scene.gridSize, scene.gridSize);
+        ctx.beginPath();
+        ctx.arc(e.origin.x, e.origin.y, e.radius, 0, 2 * Math.PI)
+        ctx.stroke();
     }
 }
 

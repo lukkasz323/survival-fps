@@ -5,6 +5,8 @@ import { Item } from "./item.js";
 import { Player } from "./player.js";
 
 export class Scene {
+    static DIAGONAL: number = 0.7071067811865475;
+
     gridSize: number = 32;
     fpsCounter = new FPSCounter();
     ticks: number = 0;
@@ -13,9 +15,9 @@ export class Scene {
     enemies: Entity[] = [];
 
     constructor() {
-        this.player = new Player({x: 1, y: 1});
-        this.enemies.push(new Entity({x: 3, y: 4}));
-        this.enemies.push(new Entity({x: 12, y: 9}));
+        this.player = new Player({x: 64, y: 64});
+        this.enemies.push(new Entity({x: 256, y: 256}));
+        this.enemies.push(new Entity({x: 192, y: 512}));
 
         console.log(this);
     }
