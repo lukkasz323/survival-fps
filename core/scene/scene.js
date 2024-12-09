@@ -7,12 +7,21 @@ export class Scene {
     fpsCounter = new FPSCounter();
     ticks = 0;
     items = [];
-    player = new Player();
+    active = [];
     enemies = [];
+    projectiles = [];
+    player = new Player();
     constructor() {
         this.player = new Player({ x: 64, y: 64 });
         this.enemies.push(new Entity({ x: 256, y: 256 }));
         this.enemies.push(new Entity({ x: 192, y: 512 }));
+        this.active.push(this.player.entity);
+        for (const p of this.projectiles) {
+            this.active.push(p.entity);
+        }
+        for (const e of this.enemies) {
+            this.active.push(e);
+        }
         console.log(this);
     }
     checkGrid() {

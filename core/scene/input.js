@@ -1,14 +1,18 @@
+import { directionVector2 } from "../../utils/vector2.js";
+import { Projectile } from "./projectile.js";
 export class Input {
     canvas;
-    screenOrigin;
+    scene;
+    mouseOrigin = { x: 0, y: 0 };
     //worldOrigin: Vector2;
     keyW = false;
     keyS = false;
     keyA = false;
     keyD = false;
     showFPS = false;
-    constructor(canvas) {
+    constructor(canvas, scene) {
         this.canvas = canvas;
+        this.scene = scene;
         console.log(this);
     }
     addEventListeners() {
@@ -18,15 +22,20 @@ export class Input {
         document.addEventListener("keydown", (event) => this.#onKeyDown(event));
         document.addEventListener("keyup", (event) => this.#onKeyUp(event));
     }
-    #onMouseMove(event) {
+    #onMouseMove(e) {
         const canvasBoundingClientRect = this.canvas.getBoundingClientRect();
-        this.screenOrigin = {
-            x: Math.floor(event.x - canvasBoundingClientRect.x + 1),
-            y: event.y - Math.floor(canvasBoundingClientRect.y)
+        this.mouseOrigin = {
+            x: Math.floor(e.x - canvasBoundingClientRect.x + 1),
+            y: e.y - Math.floor(canvasBoundingClientRect.y)
         };
-        //this.worldOrigin = {x: this.screenOrigin.x + this.scene.camera.origin.x, y: this.screenOrigin.y + this.scene.camera.origin.y};
+        // this.worldOrigin = {x: this.screenOrigin.x + this.scene.camera.origin.x, y: this.screenOrigin.y + this.scene.camera.origin.y};
     }
     #onMouseDown(e) {
+        // Shooting
+        const shot = new Projectile(this.scene.player.entity.origin, 50);
+        shot.entity.velocity = directionVector2(this.scene.player.entity.origin, this.mouseOrigin);
+        this.scene.projectiles.push(shot);
+        this.scene.active.push(shot.entity);
     }
     #onMouseUp(e) {
     }

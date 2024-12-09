@@ -9,7 +9,7 @@ export class Game {
     constructor(canvas) {
         this.canvas = canvas;
         this.scene = new Scene();
-        this.input = new Input(canvas);
+        this.input = new Input(canvas, this.scene);
     }
     run() {
         //renderGame(this.scene, this.canvas);

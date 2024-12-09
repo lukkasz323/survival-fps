@@ -2,6 +2,7 @@ import { Scene } from "./scene/scene.js";
 import { renderGame } from "./render.js";
 import { updateGame } from "./update.js";
 import { Input } from "./scene/input.js";
+import { busy } from "../utils/utils.js";
 
 export class Game {
     scene: Scene;
@@ -9,7 +10,7 @@ export class Game {
 
     constructor(public canvas: HTMLCanvasElement) {
         this.scene = new Scene();
-        this.input = new Input(canvas);
+        this.input = new Input(canvas, this.scene);
     }
 
     run() {
@@ -28,7 +29,5 @@ export class Game {
 
             requestAnimationFrame(() => gameLoop(scene, canvas, input));
         }        
-    }
-
-    
+    }   
 }

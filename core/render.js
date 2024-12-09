@@ -9,6 +9,7 @@ function renderDebug(ctx, scene) {
     const v = scene.player.entity.velocity;
     ctx.fillText(Math.abs(v.x) > 0.01 ? v.x.toString() : "0~", 32, 32);
     ctx.fillText(Math.abs(v.y) > 0.01 ? v.y.toString() : "0~", 32, 64);
+    ctx.fillText(scene.active.length.toString(), 32, 128);
 }
 function renderBackground(ctx, canvas) {
     ctx.fillStyle = "white";
@@ -33,6 +34,14 @@ function renderEntities(ctx, scene) {
     // Enemies
     ctx.strokeStyle = "red";
     for (const e of scene.enemies) {
+        ctx.beginPath();
+        ctx.arc(e.origin.x, e.origin.y, e.radius, 0, 2 * Math.PI);
+        ctx.stroke();
+    }
+    // Projectiles
+    ctx.strokeStyle = "orange";
+    for (const p of scene.projectiles) {
+        const e = p.entity;
         ctx.beginPath();
         ctx.arc(e.origin.x, e.origin.y, e.radius, 0, 2 * Math.PI);
         ctx.stroke();
